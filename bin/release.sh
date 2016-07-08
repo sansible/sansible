@@ -3,7 +3,11 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . "${DIR}/base.sh"
 
-VERSION_MINOR=$(head -n1 .version)
+if [[ -f .version ]]; then
+	VERSION_MINOR=$(head -n1 .version)
+elif [[ -f VERSION ]]; then
+	VERSION_MINOR=$(head -n1 VERSION)
+fi
 
 : ${VERSION_MINOR:=v1.0}
 : ${GIT_SRC:=origin/develop}
