@@ -1,0 +1,21 @@
+---
+
+- name: Tests
+  hosts: all
+
+  pre_tasks:
+    - name: Update apt
+      become: yes
+      apt:
+        cache_valid_time: 1800
+        update_cache: yes
+      tags:
+        - build
+
+  roles:
+    - role: sansible.#ROLE_NAME#
+
+  post_tasks:
+    - name: Assert your role
+      tags:
+        - assert
