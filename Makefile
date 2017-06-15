@@ -6,6 +6,7 @@ ROLE_NAME ?= $(shell basename $$(pwd))
 TEST_PLAYBOOK ?= test.yml
 VAGRANT_BOX ?= ubuntu/trusty64
 PATH := $(PWD)/.venv_$(ANSIBLE_INSTALL_VERSION)/bin:$(shell printenv PATH)
+SHELL := env PATH=$(PATH) /bin/bash
 
 .DEFAULT_GOAL := help
 .PHONY: help
@@ -17,23 +18,27 @@ export TEST_PLAYBOOK
 
 all: test clean
 
+## Run tests on any file change
 watch: test_deps
 	while sleep 1; do \
-		find defaults/ handlers/ meta/ tasks/ templates/ tests/vagrant/test.yml \
-		| entr -d make lint vagrant_up; \
+		find defaults/ handlers/ meta/ tasks/ templates/ tests/test.yml \
+		| entr -d make lint vagrant; \
 	done
 
-test: lint test_deps vagrant_up
+## Run tests
+test: lint test_deps vagrant
 
-integration_test: clean integration_test_deps vagrant_up clean
+## Install test dependencies
+test_deps: .venv_$(ANSIBLE_INSTALL_VERSION) tests/roles
 
-test_deps: .venv_$(ANSIBLE_INSTALL_VERSION)
-	rm -rf tests/sansible.*
-	ln -s .. tests/sansible.$(ROLE_NAME)
-	ansible-galaxy install --force -p tests -r tests/local_requirements.yml
+tests/roles:
+	mkdir -p tests/roles
+	ln -s ../.. tests/roles/sansible.$(ROLE_NAME)
+	ansible-galaxy install -p tests/roles -r tests/local_requirements.yml --ignore-errors
 
 ## ! Executes Ansible tests using local connection
 # run it ONLY from within a test VM.
+# If you want to test this role, run `make test` instead.
 # Example: make test_ansible
 #          make test_ansible TEST_PLAYBOOK=test-something-else.yml
 test_ansible: test_ansible_build test_ansible_configure
@@ -83,7 +88,7 @@ vagrant_%:
 	.venv_$(ANSIBLE_INSTALL_VERSION)/bin/pip install ansible==$(ANSIBLE_INSTALL_VERSION)
 	virtualenv --relocatable .venv_$(ANSIBLE_INSTALL_VERSION)
 
-## list Ansible files
+## lint Ansible files
 lint: .venv_$(ANSIBLE_INSTALL_VERSION)
 	find defaults/ handlers/ meta/ tasks/ templates/ -name "*.yml" | xargs -I{} ansible-lint {}
 
@@ -99,8 +104,8 @@ help:
 ## Removes all downloaded dependencies
 clean:
 	rm -rf .venv_*
-	rm -rf tests/sansible.*
-	cd tests && vagrant destroy
+	rm -rf tests/roles
+	cd tests && (vagrant destroy || echo "skipping vagrant destroy")
 
 .make:
 	touch .make

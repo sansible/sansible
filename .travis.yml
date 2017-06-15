@@ -22,12 +22,11 @@ before_install:
   - sudo apt-get update -qq
 
 install:
+  # dowload dependencies
   - make test_deps
 
 script:
-  # Install Role Dependencies
   - make lint
-  # Test build and configure
   - make test_ansible
 
 notifications:
