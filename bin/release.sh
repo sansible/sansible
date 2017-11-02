@@ -12,10 +12,36 @@ fi
 : ${VERSION_MINOR:=v1.0}
 : ${GIT_SRC:=origin/develop}
 : ${GIT_DST:=master}
+: ${FORCE_BRANCH:=develop}
 
 info "Fetching latest remote branches and tags"
 git fetch
 git fetch --tags
+
+# Ensure we are in FORCE_BRANCH (defaults to "develop")
+if [ "$(git rev-parse --abbrev-ref HEAD)" != "${FORCE_BRANCH}" ]; then
+	error "Local branch is not ${FORCE_BRANCH}"
+	exit 1
+fi
+
+# Ensure working tree is clean
+if [ -n "$(git status --porcelain)" ]; then
+	error "Local working tree unclean"
+	exit 1
+fi
+
+# Ensure there are no un-pushed commits
+if [ -n "$(git log origin/${FORCE_BRANCH}..HEAD)" ]; then
+	error "Local branch has un-pushed commits"
+	exit 1
+fi
+
+info "Updating local branch"
+git pull
+if [ $? != 0 ]; then
+	error "Failed to pull ${FORCE_BRANCH}"
+	exit 1
+fi
 
 info "Finding next tag name"
 TAGS=$(git tag -l | grep -E "^${VERSION_MINOR}\.[0-9]+")
