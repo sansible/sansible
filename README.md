@@ -5,7 +5,7 @@ This repo is a set of tools to aid with the development of roles in the SAnsible
 
 
 
-## The roles
+## Role style guide
 
 All roles in SAnsible follow a similiar pattern, however some roles are slightly older than
 others so their Makefiles, tests and travis.yml files are somewhat out of date.
@@ -24,6 +24,7 @@ In general though the roles follow a standardised pattern.
 * Ansible-lint is used as part of the tests (pip install ansible-lint)
 * Variables all have a parent hash, this has the advantage of making it easier to read
 the vars, but has the disadvantage of requiring hash behaviour to be set to 'merge'
+* The parent hash should have the prefix ```sansible_``` eg. ```sansible_ansible```
 
 
 
@@ -50,6 +51,30 @@ A good guide on commit messages is [Tim Pope's guide](http://tbaggery.com/2008/0
 
 Once your PR is opened Travis will test it, if all the tests passed your PR will be
 considered for merging.
+
+
+
+
+## Creating new roles
+
+Here are the steps for adding a new Sansible role:
+
+* Create new repo in Sansible org, starting with the default README option
+* Create a develop branch from master, should have master and develop after this
+* Set develop to be the default branch
+* Set branch protection on both master and develop branches
+* Set develop to require reviews before merges
+* Add Trusted Collaborators with admin permissions
+* Add Collaborators with write permissions
+* Login to Travis, re-sync repos and add new repo
+* Create first issue with the title 'Add initial role'
+* Copy skeleton for role from the scaffold branch in the Sansible repo
+* Add role contents following standards in the style guide above
+* Open first PR referencing initial role issue
+* Once Travis tests start running set these as a merge requirement for develop
+* Once first PR is merged login to Ansible Galaxy and add new repo
+* Follow the merge and release guide for pushing from develop to master
+* Check Ansible Galaxy to ensure the new role is in place
 
 
 
