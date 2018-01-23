@@ -24,6 +24,8 @@ provisioner:
       hash_behaviour: merge
   lint:
     name: ansible-lint
+  options:
+    tags: "assert,build,configure"
 
 # Configures the YAML linter; currently, only support for yamllint is implemented.  Configuration options for
 # yamllint (https://yamllint.readthedocs.io/en/latest/configuration.html) can be specified.
