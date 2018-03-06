@@ -19,6 +19,7 @@ galaxy_info:
       versions:
         - trusty
         - xenial
+        - bionic
 
   # List of tags for your role to enable users to find it easily on Ansible Galaxy.
   # See https://galaxy.ansible.com/explore#/ for inspiration.
