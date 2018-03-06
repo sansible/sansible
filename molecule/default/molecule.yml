@@ -13,6 +13,8 @@ platforms:
     image: ubuntu:trusty
   - name: ROLE_NAME-xenial
     image: ubuntu:xenial
+  - name: ROLE_NAME-bionic
+    image: ubuntu:bionic
 
 # Ansible is the only supported provisioner.  Configure Ansible options here, change the linter for Ansible playbooks,
 # or modify the playbooks run for the various molecule tasks.
