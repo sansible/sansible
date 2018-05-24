@@ -20,18 +20,19 @@ It uses [molecule](http://molecule.readthedocs.io/) to orchestrate testing, and
 [testinfra](https://testinfra.readthedocs.io/) for verification.
 
 The tests described herein provide support for [Ubuntu Long Term Support releases](https://wiki.ubuntu.com/LTS),
-currently [Ubuntu 14.04 Trusty Tahr](https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes) (until April 2019) and
-[Ubuntu 16.04 Xenial Xerus](https://wiki.ubuntu.com/XenialXerus/ReleaseNotes) (until April 2021), though support
-for other distributions can easily be added.
+currently [Ubuntu 14.04 Trusty Tahr](https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes) (until April 2019),
+[Ubuntu 16.04 Xenial Xerus](https://wiki.ubuntu.com/XenialXerus/ReleaseNotes) (until April 2021), and
+[Ubuntu 18.04 Bionic Beaver](https://wiki.ubuntu.com/BionicBeaver/ReleaseNotes) (until April 2023), though support for
+other distributions can easily be added.
 
 It features a [Makefile](https://www.gnu.org/software/make/) for ease of use, [Travis CI](https://travis-ci.org/)
 integration, and an optional, but recommended, [pre-commit](http://pre-commit.com/) configuration for linting and
 verification, which can also be installed as a [git pre-commit hook](https://git-scm.com/docs/githooks).
 
 **NOTE:** While this README assumes you are using docker and testinfra for testing, molecule provides drivers for
-[a variety of local and cloud
-virtualisation technologies](http://molecule.readthedocs.io/en/latest/configuration.html#driver), and also
-alternatively supports the [goss testing framework](https://goss.rocks/).  However, providing instructions to that
+a variety of
+[local and cloud virtualisation technologies](http://molecule.readthedocs.io/en/latest/configuration.html#driver), and
+also alternatively supports the [goss testing framework](https://goss.rocks/); however, providing instructions to that
 end are outside the scope of this document.
 
 
@@ -91,14 +92,14 @@ Common tasks are made available through simple `make` commands; the virtualenv c
 
 `make all` is the one-step command to test your role; execute `make clean` to clean up afterwards.
 
-By default, testing will be performed with Ansible 2.2.3.0, but you can force the use of another Ansible version by
-setting the `ANSIBLE_INSTALL_VERSION` environment variable to a different version, e.g. `2.4.2.0`.
+By default, testing will be performed with Ansible 2.3.3.0, but you can force the use of another Ansible version by
+setting the `ANSIBLE_INSTALL_VERSION` environment variable to a different version, e.g. `2.4.4.0`.
 
-**CAVEAT:** The version must be available from pip.  You can use the following command to quickly fetch a list of
-all Ansible 2.2-2.4 versions available from pip:
+**CAVEAT:** The version must be available from pip.  You can use the following command to fetch a list of all Ansible
+2.3.x - 2.5.x versions available from pip:
 
 ```Bash
-ANSIBLE_PIP_VERSIONS=`curl -s https://pypi.python.org/pypi/ansible/json`; for I in 2.{2..4}; do echo ${ANSIBLE_PIP_VERSIONS} | jq --arg ver ${I} -r '[.releases | keys | sort[] | select(startswith($ver))][-1]'; done
+ANSIBLE_PIP_VERSIONS=`curl -s https://pypi.org/pypi/ansible/json`; for I in 2.{3..5}; do echo ${ANSIBLE_PIP_VERSIONS} | jq --arg ver ${I} -r '[.releases | keys | sort[] | select(startswith($ver))][-1]'; done
 ```
 
 
@@ -205,8 +206,6 @@ contains a list of Ansible versions with which your role will be tested.  Add or
 here, but remember that all versions must be available from pip.  Further documentation on availabe options in
 `.travis.yml` can be found [on the Travis CI website](https://docs.travis-ci.com/user/customizing-the-build/).
 
-**ToDo:** Add doco as to how enable Travis for a rep.
-
 
 ## TL;DR
 
@@ -224,9 +223,9 @@ here, but remember that all versions must be available from pip.  Further docume
 
 5) Modify `molecule/default/tests/test_default.py` to test your role.
 
-6) Run `make all` to test your new role using Ansible 2.2.3 on Ubuntu Trusty Tahr and Xenial Xerus, or `make deps`,
-   then `make watch` to re-run all tests every time a file is changed.  Once you're happy, run `make clean` to destroy
-   the docker containers used to test the role and clean up the working directory.
+6) Run `make all` to test your new role using Ansible 2.3.3.0 on Ubuntu Trusty Tahr, Xenial Xerus, and Bionic Beaver,
+   or `make deps`, then `make watch` to re-run all tests every time a file is changed.  Once you're happy, run
+   `make clean` to destroy the docker containers used to test the role and clean up the working directory.
 
 7) Delete _this_ file, rename `README.template` to `README.md` and modify it to describe your new role.
 
