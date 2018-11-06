@@ -1,6 +1,6 @@
 # Sansible Scaffold
 
-[![Build Status](https://travis-ci.org/sansible/sansible.svg?branch=scaffold)](https://travis-ci.org/sansible/sansible)  
+[![Build Status](https://travis-ci.org/sansible/sansible.svg?branch=scaffold)](https://travis-ci.org/sansible/sansible)
 
 * [TL;DR](#tldr)
 * [Rationale](#rationale)
@@ -92,7 +92,7 @@ Common tasks are made available through simple `make` commands; the virtualenv c
 
 `make all` is the one-step command to test your role; execute `make clean` to clean up afterwards.
 
-By default, testing will be performed with Ansible 2.3.3.0, but you can force the use of another Ansible version by
+By default, testing will be performed with Ansible 2.6.7, but you can force the use of another Ansible version by
 setting the `ANSIBLE_INSTALL_VERSION` environment variable to a different version, e.g. `2.4.4.0`.
 
 **CAVEAT:** The version must be available from pip.  You can use the following command to fetch a list of all Ansible
@@ -183,7 +183,7 @@ Monitors role directories and molecule files, and executes `make test` on any ch
 pre-commit is an easy way to run one or more linters before committing changes, supporting
 [a large variety of hooks](http://pre-commit.com/hooks.html).
 
-It can be installed for the current user via `pip install --user pre-commit` (no root access required).  
+It can be installed for the current user via `pip install --user pre-commit` (no root access required).
 
 Run `pre-commit install` to install pre-commit into your git hooks.  If you want to manually run all pre-commit hooks
 on a repository, execute `pre-commit run --all`.
@@ -223,7 +223,7 @@ here, but remember that all versions must be available from pip.  Further docume
 
 5) Modify `molecule/default/tests/test_default.py` to test your role.
 
-6) Run `make all` to test your new role using Ansible 2.3.3.0 on Ubuntu Trusty Tahr, Xenial Xerus, and Bionic Beaver,
+6) Run `make all` to test your new role using Ansible 2.6.7 on Ubuntu Trusty Tahr, Xenial Xerus, and Bionic Beaver,
    or `make deps`, then `make watch` to re-run all tests every time a file is changed.  Once you're happy, run
    `make clean` to destroy the docker containers used to test the role and clean up the working directory.
 
