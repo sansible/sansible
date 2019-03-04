@@ -51,14 +51,15 @@ MINOR=`echo "${TAGS}" | grep v${MAJOR} | sed 's/v[0-9]*\.\([0-9]*\)\..*/\1/' | s
 PATCH=`echo "${TAGS}" | grep v${MAJOR}.${MINOR} | sed 's/v[0-9]*\.[0-9]*\.\([0-9]*\)/\1/' | sort -n | tail -1`
 PATCH_NEXT=$(($PATCH + 1))
 NEW_TAG="v${MAJOR}.${MINOR}.${PATCH_NEXT}"
+LATEST_TAG="v${MAJOR}.${MINOR}.0-latest"
 
-info "Creating tag ${NEW_TAG} and updating ${VERSION_MINOR}"
+info "Creating tag ${NEW_TAG} and updating ${LATEST_TAG}"
 git tag "${NEW_TAG}" "${GIT_SRC}"
-git tag --force "${VERSION_MINOR}" "${GIT_SRC}"
+git tag --force "${LATEST_TAG}" "${GIT_SRC}"
 
 info "Pushing tags"
 git push origin tag "${NEW_TAG}"
-git push --force origin tag "${VERSION_MINOR}"
+git push --force origin tag "${LATEST_TAG}"
 
 info "Updating ${GIT_DST} branch"
 git checkout "${GIT_DST}"
