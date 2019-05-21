@@ -9,8 +9,6 @@ driver:
 # See https://molecule.readthedocs.io/en/latest/configuration.html#platforms for details.
 # NOTE: Different drivers (see above) may have different configuration options.
 platforms:
-  - name: ROLE_NAME-trusty
-    image: ubuntu:trusty
   - name: ROLE_NAME-xenial
     image: ubuntu:xenial
   - name: ROLE_NAME-bionic
