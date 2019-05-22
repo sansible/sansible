@@ -20,8 +20,7 @@ It uses [molecule](http://molecule.readthedocs.io/) to orchestrate testing, and
 [testinfra](https://testinfra.readthedocs.io/) for verification.
 
 The tests described herein provide support for [Ubuntu Long Term Support releases](https://wiki.ubuntu.com/LTS),
-currently [Ubuntu 14.04 Trusty Tahr](https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes) (until April 2019),
-[Ubuntu 16.04 Xenial Xerus](https://wiki.ubuntu.com/XenialXerus/ReleaseNotes) (until April 2021), and
+currently [Ubuntu 16.04 Xenial Xerus](https://wiki.ubuntu.com/XenialXerus/ReleaseNotes) (until April 2021), and
 [Ubuntu 18.04 Bionic Beaver](https://wiki.ubuntu.com/BionicBeaver/ReleaseNotes) (until April 2023), though support for
 other distributions can easily be added.
 
@@ -92,7 +91,7 @@ Common tasks are made available through simple `make` commands; the virtualenv c
 
 `make all` is the one-step command to test your role; execute `make clean` to clean up afterwards.
 
-By default, testing will be performed with Ansible 2.6.7, but you can force the use of another Ansible version by
+By default, testing will be performed with Ansible 2.8.0, but you can force the use of another Ansible version by
 setting the `ANSIBLE_INSTALL_VERSION` environment variable to a different version, e.g. `2.4.4.0`.
 
 **CAVEAT:** The version must be available from pip.  You can use the following command to fetch a list of all Ansible
@@ -223,7 +222,7 @@ here, but remember that all versions must be available from pip.  Further docume
 
 5) Modify `molecule/default/tests/test_default.py` to test your role.
 
-6) Run `make all` to test your new role using Ansible 2.6.7 on Ubuntu Trusty Tahr, Xenial Xerus, and Bionic Beaver,
+6) Run `make all` to test your new role using Ansible 2.8.0 on Ubuntu Xenial Xerus and Bionic Beaver,
    or `make deps`, then `make watch` to re-run all tests every time a file is changed.  Once you're happy, run
    `make clean` to destroy the docker containers used to test the role and clean up the working directory.
 
