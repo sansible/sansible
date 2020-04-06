@@ -9,9 +9,9 @@ galaxy_info:
 
   license: MIT
 
-  # SAnsible only supports Ansible 2.6+
-  min_ansible_version: 2.6
-  min_ansible_container_version: 2.6
+  # SAnsible only supports Ansible 2.7+
+  min_ansible_version: 2.7
+  min_ansible_container_version: 2.7
 
   # All platforms supported by the role.  Ensure you test all in this list!
   platforms:
