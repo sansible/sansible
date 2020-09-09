@@ -5,17 +5,23 @@
   gather_facts: no
 
   tasks:
-    - name: Install Python for Ansible
-      become: yes
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal python-zipstream)
-      changed_when: no
-
-    - name: Install apt-transport-https, lsb-release, net-tools
+    - name: Install pre-requisite packages
       become: yes
       apt:
         name:
           - apt-transport-https
+          - cron
           - lsb-release
-          - net-tools
+          - python3-pip
+          - python3-setuptools
+          - unzip
         update_cache: yes
 
+    - name: Symlink pip3 for TestInfra
+      become: yes
+      file:
+        dest: /usr/bin/pip
+        force: no
+        mode: 0751
+        src: /usr/bin/pip3
+        state: link

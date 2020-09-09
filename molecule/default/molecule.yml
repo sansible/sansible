@@ -11,27 +11,19 @@ platforms:
 
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 
-lint:
-  name: yamllint
-  options:
-    config-data:
-      extends: default
-      ignore: .venv_ansible*
-      rules:
-        line-length:
-          max: 159
-        truthy: disable
-
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8 molecule/
 dependency:
   name: galaxy
+  options:
+    role-file: requirements.yml
 
 scenario:
   name: default
 
 verifier:
   name: testinfra
-  lint:
-    name: flake8
